@@ -1,23 +1,37 @@
 services:
   mongo:
-    image: mongo
+    image: mongo:6
     container_name: mongo
     ports:
       - "27017:27017"
-    command: mongod --quiet   
+    # Run mongod in quiet mode, bind to all interfaces so other containers can connect,
+    # and redirect STDERR to /dev/null to reduce log noise.
+    # NOTE: redirecting STDERR hides warnings/errors; remove the redirection if you
+    # want to see startup warnings again.
+    command: ["sh", "-c", "mongod --quiet --bind_ip_all 2>/dev/null"]
+    restart: unless-stopped
+    # persist DB data so mongodb can start reliably and keep data between restarts
+    volumes:
+      - mongo_data:/data/db
     networks:
       - mern-network
 
-   
   frontend:
     build: ./frontend
     container_name: react_docker_frontend
     ports:
       - "5173:5173"
     depends_on:
-      - backend
+      backend:
+        condition: service_started
+    # Development-friendly mounts so host edits are reflected immediately.
+    volumes:
+      - ./frontend:/app:delegated
+      - /app/node_modules
     environment:
-      - VITE_API_URL=http://localhost:5000
+      VITE_API_URL: "http://localhost:5000"
+      CHOKIDAR_USEPOLLING: "true"
+    command: ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
     networks:
       - mern-network
 
@@ -28,9 +42,27 @@ services:
       - "5000:5000"
     env_file:
       - ./backend/.env
+    # Wait until the mongo container has started (don't require healthcheck)
+    depends_on:
+      mongo:
+        condition: service_started
+
+    # No healthcheck: rely on service start order and the app's own readiness.
+
+    # (DEV NOTE) Do NOT bind-mount the backend source by default here —
+    # mounting the host ./backend can hide the image-installed node_modules
+    # and lead to "Cannot find module" errors. If you need hot-reload,
+    # run the backend on the host or add a dedicated dev-only override file.
+    # Use the production start script inside container to avoid missing dev-only tools
+    command: ["npm", "start"]
+    restart: unless-stopped
     networks:
       - mern-network
 
 networks:
   mern-network:
     driver: bridge
+
+volumes:
+  mongo_data:
+    driver: local

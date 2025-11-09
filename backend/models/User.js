@@ -6,6 +6,13 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true }
 });
 
+// Gamification & profile fields
+userSchema.add({
+  xp: { type: Number, default: 0 },
+  streak: { type: Number, default: 0 },
+  displayName: { type: String }
+});
+
 // Hash password before saving
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
