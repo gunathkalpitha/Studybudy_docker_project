@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'gbgk/studybudy-backend'
+        BACKEND_IMAGE = 'gbgk/studybudy-backend'
+        FRONTEND_IMAGE = 'gbgk/studybudy-frontend'
     }
 
     stages {
@@ -12,10 +13,18 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build Backend Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE_NAME}:latest -f backend/Dockerfile backend/"
+                    sh "docker build -t ${BACKEND_IMAGE}:latest -f backend/Dockerfile backend/"
+                }
+            }
+        }
+
+        stage('Build Frontend Docker Image') {
+            steps {
+                script {
+                    sh "docker build -t ${FRONTEND_IMAGE}:latest -f frontend/Dockerfile frontend/"
                 }
             }
         }
@@ -30,10 +39,18 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push Backend Docker Image') {
             steps {
                 script {
-                    sh "docker push ${IMAGE_NAME}:latest"
+                    sh "docker push ${BACKEND_IMAGE}:latest"
+                }
+            }
+        }
+
+        stage('Push Frontend Docker Image') {
+            steps {
+                script {
+                    sh "docker push ${FRONTEND_IMAGE}:latest"
                 }
             }
         }
