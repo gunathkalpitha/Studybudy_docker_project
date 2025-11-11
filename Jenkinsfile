@@ -15,7 +15,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t ${IMAGE_NAME}:latest -f backend/Dockerfile backend/'
+                    sh "docker build -t ${IMAGE_NAME}:latest -f backend/Dockerfile backend/"
                 }
             }
         }
@@ -33,7 +33,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    sh 'docker push ${IMAGE_NAME}:latest'
+                    sh "docker push ${IMAGE_NAME}:latest"
                 }
             }
         }
