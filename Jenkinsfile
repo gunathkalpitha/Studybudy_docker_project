@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         IMAGE_NAME = 'gbgk/studybudy-backend'
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials')
     }
 
     stages {
@@ -16,15 +15,17 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE_NAME}:latest -f backend/Dockerfile backend/"
+                    sh 'docker build -t ${IMAGE_NAME}:latest -f backend/Dockerfile backend/'
                 }
             }
         }
 
         stage('Login to DockerHub') {
             steps {
-                script {
-                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh '''
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                    '''
                 }
             }
         }
@@ -32,7 +33,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    sh "docker push ${IMAGE_NAME}:latest"
+                    sh 'docker push ${IMAGE_NAME}:latest'
                 }
             }
         }
