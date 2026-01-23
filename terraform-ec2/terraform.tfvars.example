@@ -1,0 +1,12 @@
+aws_region     = "us-east-1"
+project_name   = "react-doker"
+
+# MongoDB connection string
+mongodb_uri = "mongodb+srv://username:password@cluster.mongodb.net/dbname"
+
+# JWT secret
+jwt_secret = "your-super-secret-jwt-key"
+
+# Your SSH public key (generate with: ssh-keygen -t rsa -b 4096)
+# Get public key: cat ~/.ssh/id_rsa.pub
+ssh_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAA... your-email@example.com"

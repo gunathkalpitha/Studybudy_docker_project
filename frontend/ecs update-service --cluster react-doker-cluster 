@@ -1,0 +1,214 @@
+{
+    "service": {
+        "serviceArn": "arn:aws:ecs:us-east-1:196530534986:service/react-doker-cluster/react-doker-frontend-service",
+        "serviceName": "react-doker-frontend-service",
+        "clusterArn": "arn:aws:ecs:us-east-1:196530534986:cluster/react-doker-cluster",
+        "loadBalancers": [
+            {
+                "targetGroupArn": "arn:aws:elasticloadbalancing:us-east-1:196530534986:targetgroup/react-doker-frontend-tg/4055888163caebfb",
+                "containerName": "frontend",
+                "containerPort": 5173
+            }
+        ],
+        "serviceRegistries": [],
+        "status": "ACTIVE",
+        "desiredCount": 1,
+        "runningCount": 0,
+        "pendingCount": 0,
+        "launchType": "FARGATE",
+        "platformVersion": "LATEST",
+        "platformFamily": "Linux",
+        "taskDefinition": "arn:aws:ecs:us-east-1:196530534986:task-definition/react-doker-frontend:1",
+        "deploymentConfiguration": {
+            "deploymentCircuitBreaker": {
+                "enable": false,
+                "rollback": false
+            },
+            "maximumPercent": 200,
+            "minimumHealthyPercent": 100,
+            "strategy": "ROLLING",
+            "bakeTimeInMinutes": 0
+        },
+        "deployments": [
+            {
+                "id": "ecs-svc/4440956451618260032",
+                "status": "PRIMARY",
+                "taskDefinition": "arn:aws:ecs:us-east-1:196530534986:task-definition/react-doker-frontend:1",
+                "desiredCount": 0,
+                "pendingCount": 0,
+                "runningCount": 0,
+                "failedTasks": 0,
+                "createdAt": "2026-01-23T13:02:59.880000+05:30",
+                "updatedAt": "2026-01-23T13:02:59.880000+05:30",
+                "launchType": "FARGATE",
+                "platformVersion": "1.4.0",
+                "platformFamily": "Linux",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-01d60c4ad563f9008",
+                            "subnet-09e6d2aa4bfa1cf27"
+                        ],
+                        "securityGroups": [
+                            "sg-01d18d9e9ddad2683"
+                        ],
+                        "assignPublicIp": "DISABLED"
+                    }
+                },
+                "rolloutState": "IN_PROGRESS",
+                "rolloutStateReason": "ECS deployment ecs-svc/4440956451618260032 in progress."
+            },
+            {
+                "id": "ecs-svc/6204684147035863520",
+                "status": "ACTIVE",
+                "taskDefinition": "arn:aws:ecs:us-east-1:196530534986:task-definition/react-doker-frontend:1",
+                "desiredCount": 1,
+                "pendingCount": 0,
+                "runningCount": 0,
+                "failedTasks": 7,
+                "createdAt": "2026-01-23T12:43:19.017000+05:30",
+                "updatedAt": "2026-01-23T12:50:33.515000+05:30",
+                "launchType": "FARGATE",
+                "platformVersion": "1.4.0",
+                "platformFamily": "Linux",
+                "networkConfiguration": {
+                    "awsvpcConfiguration": {
+                        "subnets": [
+                            "subnet-01d60c4ad563f9008",
+                            "subnet-09e6d2aa4bfa1cf27"
+                        ],
+                        "securityGroups": [
+                            "sg-01d18d9e9ddad2683"
+                        ],
+                        "assignPublicIp": "DISABLED"
+                    }
+                },
+                "rolloutState": "IN_PROGRESS",
+                "rolloutStateReason": "ECS deployment ecs-svc/6204684147035863520 in progress."
+            }
+        ],
+        "roleArn": "arn:aws:iam::196530534986:role/aws-service-role/ecs.amazonaws.com/AWSServiceRoleForECS",
+        "events": [
+            {
+                "id": "75a39611-1541-4661-ad42-0bee7c30ec5a",
+                "createdAt": "2026-01-23T12:58:40.647000+05:30",
+                "message": "(service react-doker-frontend-service) was unable to place a task. Reason: CannotPullContainerError: pull image manifest has been retried 7 time(s): failed to resolve ref 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: not found."
+            },
+            {
+                "id": "e52deca5-38f7-43cc-b453-ec84e42e0bdc",
+                "createdAt": "2026-01-23T12:57:16.083000+05:30",
+                "message": "(service react-doker-frontend-service) has started 1 tasks: (task 247b8017dcd440ec9207de149f4273c2)."
+            },
+            {
+                "id": "5298000c-6461-4d7a-ab6b-f6bf8a404c80",
+                "createdAt": "2026-01-23T12:56:44.458000+05:30",
+                "message": "(service react-doker-frontend-service) was unable to place a task. Reason: CannotPullContainerError: pull image manifest has been retried 7 time(s): failed to resolve ref 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: not found."
+            },
+            {
+                "id": "b774e254-7dea-4842-a45b-a9129b8dfba9",
+                "createdAt": "2026-01-23T12:55:17.267000+05:30",
+                "message": "(service react-doker-frontend-service) has started 1 tasks: (task 472fbef766134e9b8fd9e3ea930df06b)."
+            },
+            {
+                "id": "11db1873-5ac2-436d-9b80-392ef99e10c8",
+                "createdAt": "2026-01-23T12:54:46.889000+05:30",
+                "message": "(service react-doker-frontend-service) was unable to place a task. Reason: CannotPullContainerError: pull image manifest has been retried 7 time(s): failed to resolve ref 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: not found."
+            },
+            {
+                "id": "a36ae2e7-f8e5-4458-8115-d05c881319b9",
+                "createdAt": "2026-01-23T12:53:20.080000+05:30",
+                "message": "(service react-doker-frontend-service) has started 1 tasks: (task 389bdf09a3704ff3a43d3a8219cab434)."
+            },
+            {
+                "id": "e6a9315d-5f7c-4d2a-8286-c53f6f896915",
+                "createdAt": "2026-01-23T12:52:49.746000+05:30",
+                "message": "(service react-doker-frontend-service) was unable to place a task. Reason: CannotPullContainerError: pull image manifest has been retried 7 time(s): failed to resolve ref 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: not found."
+            },
+            {
+                "id": "e836b12d-9f00-4d22-8c1c-02df5a7325d8",
+                "createdAt": "2026-01-23T12:51:15.542000+05:30",
+                "message": "(service react-doker-frontend-service) has started 1 tasks: (task 8e53ad9c1f694e79a061a7d9542541d5)."
+            },
+            {
+                "id": "edf0f11e-14ef-49a9-97b1-44e24a9c6ad4",
+                "createdAt": "2026-01-23T12:50:43.118000+05:30",
+                "message": "(service react-doker-frontend-service) was unable to place a task. Reason: CannotPullContainerError: pull image manifest has been retried 7 time(s): failed to resolve ref 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: not found."
+            },
+            {
+                "id": "fdec0b8c-ef2d-493c-ab24-cdbd3efc4270",
+                "createdAt": "2026-01-23T12:49:21.765000+05:30",
+                "message": "(service react-doker-frontend-service) has started 1 tasks: (task b5b777d6906e42c6bb086810b9e493c4)."
+            },
+            {
+                "id": "3f3c09f3-1388-4004-8fff-e0afac5ce421",
+                "createdAt": "2026-01-23T12:48:50.530000+05:30",
+                "message": "(service react-doker-frontend-service) was unable to place a task. Reason: CannotPullContainerError: pull image manifest has been retried 7 time(s): failed to resolve ref 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: not found."
+            },
+            {
+                "id": "f13ccb9f-f0c0-4ddb-9fc4-481c62bedd47",
+                "createdAt": "2026-01-23T12:47:25.627000+05:30",
+                "message": "(service react-doker-frontend-service) has started 1 tasks: (task b2908f48fd93468fa6cdedc5715ec702)."
+            },
+            {
+                "id": "ac27a611-2b82-4f2f-978d-c0831f354ade",
+                "createdAt": "2026-01-23T12:46:53.138000+05:30",
+                "message": "(service react-doker-frontend-service) was unable to place a task. Reason: CannotPullContainerError: pull image manifest has been retried 7 time(s): failed to resolve ref 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: not found."
+            },
+            {
+                "id": "23583f3c-e004-4590-a95d-c28a1f310f11",
+                "createdAt": "2026-01-23T12:45:17.398000+05:30",
+                "message": "(service react-doker-frontend-service) has started 1 tasks: (task 5a89d49d177e4837baea577377cb9200)."
+            },
+            {
+                "id": "062f3079-ed4a-4bce-94ed-1928558d420b",
+                "createdAt": "2026-01-23T12:45:15.860000+05:30",
+                "message": "(service react-doker-frontend-service) was unable to place a task. Reason: CannotPullContainerError: pull image manifest has been retried 7 time(s): failed to resolve ref 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest: not found."
+            },
+            {
+                "id": "7b13b039-856e-468e-9ed5-5ae060ccbd77",
+                "createdAt": "2026-01-23T12:43:45.313000+05:30",
+                "message": "(service react-doker-frontend-service) has started 1 tasks: (task 426d3062604d408c9c9abc64621425c5)."
+            }
+        ],
+        "createdAt": "2026-01-23T12:43:19.017000+05:30",
+        "currentServiceRevisions": [
+            {
+                "arn": "arn:aws:ecs:us-east-1:196530534986:service-revision/react-doker-cluster/react-doker-frontend-service/4440956451618260032",
+                "requestedTaskCount": 0,
+                "runningTaskCount": 0,
+                "pendingTaskCount": 0
+            },
+            {
+                "arn": "arn:aws:ecs:us-east-1:196530534986:service-revision/react-doker-cluster/react-doker-frontend-service/6204684147035863520",
+                "requestedTaskCount": 1,
+                "runningTaskCount": 0,
+                "pendingTaskCount": 0
+            }
+        ],
+        "placementConstraints": [],
+        "placementStrategy": [],
+        "networkConfiguration": {
+            "awsvpcConfiguration": {
+                "subnets": [
+                    "subnet-01d60c4ad563f9008",
+                    "subnet-09e6d2aa4bfa1cf27"
+                ],
+                "securityGroups": [
+                    "sg-01d18d9e9ddad2683"
+                ],
+                "assignPublicIp": "DISABLED"
+            }
+        },
+        "healthCheckGracePeriodSeconds": 0,
+        "schedulingStrategy": "REPLICA",
+        "deploymentController": {
+            "type": "ECS"
+        },
+        "createdBy": "arn:aws:iam::196530534986:user/gbgk",
+        "enableECSManagedTags": false,
+        "propagateTags": "NONE",
+        "enableExecuteCommand": false,
+        "availabilityZoneRebalancing": "DISABLED",
+        "resourceManagementType": "CUSTOMER"
+    }
+}

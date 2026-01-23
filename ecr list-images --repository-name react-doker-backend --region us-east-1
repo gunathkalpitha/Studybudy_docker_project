@@ -1,0 +1,32 @@
+{
+    "repositories": [
+        {
+            "repositoryArn": "arn:aws:ecr:us-east-1:196530534986:repository/react-doker-frontend",
+            "registryId": "196530534986",
+            "repositoryName": "react-doker-frontend",
+            "repositoryUri": "196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend",
+            "createdAt": "2026-01-23T16:07:43.634000+05:30",
+            "imageTagMutability": "MUTABLE",
+            "imageScanningConfiguration": {
+                "scanOnPush": false
+            },
+            "encryptionConfiguration": {
+                "encryptionType": "AES256"
+            }
+        },
+        {
+            "repositoryArn": "arn:aws:ecr:us-east-1:196530534986:repository/react-doker-backend",
+            "registryId": "196530534986",
+            "repositoryName": "react-doker-backend",
+            "repositoryUri": "196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-backend",
+            "createdAt": "2026-01-23T16:05:10.854000+05:30",
+            "imageTagMutability": "MUTABLE",
+            "imageScanningConfiguration": {
+                "scanOnPush": false
+            },
+            "encryptionConfiguration": {
+                "encryptionType": "AES256"
+            }
+        }
+    ]
+}

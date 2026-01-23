@@ -1,0 +1,13 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# Variables
+*.tfvars
+!terraform.tfvars.example
+
+# SSH Keys
+*.pem
+*.pub
