@@ -67,32 +67,32 @@ export default function Landing() {
             <p className="mt-4 text-lg text-gray-600">Powerful tools designed to enhance your collaborative learning experience</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
-                <UsersIcon className="h-6 w-6 text-indigo-600" />
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out cursor-pointer group">
+              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-indigo-600 transition-colors duration-300">
+                <UsersIcon className="h-6 w-6 text-indigo-600 group-hover:text-white transition-colors duration-300" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Collaborative Rooms</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-300">Collaborative Rooms</h3>
               <p className="text-gray-600">Join real-time study sessions with shared whiteboards and notes.</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
-                <BookOpenIcon className="h-6 w-6 text-indigo-600" />
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out cursor-pointer group">
+              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-indigo-600 transition-colors duration-300">
+                <BookOpenIcon className="h-6 w-6 text-indigo-600 group-hover:text-white transition-colors duration-300" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Study Tools</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-300">Study Tools</h3>
               <p className="text-gray-600">Create flashcards, quizzes, and mind maps with your study groups.</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
-                <ClockIcon className="h-6 w-6 text-indigo-600" />
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out cursor-pointer group">
+              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-indigo-600 transition-colors duration-300">
+                <ClockIcon className="h-6 w-6 text-indigo-600 group-hover:text-white transition-colors duration-300" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Productivity</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-300">Productivity</h3>
               <p className="text-gray-600">Stay focused with Pomodoro timers and track your study progress.</p>
             </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
-                <ShareIcon className="h-6 w-6 text-indigo-600" />
+            <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-in-out cursor-pointer group">
+              <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4 group-hover:bg-indigo-600 transition-colors duration-300">
+                <ShareIcon className="h-6 w-6 text-indigo-600 group-hover:text-white transition-colors duration-300" />
               </div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Resource Sharing</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors duration-300">Resource Sharing</h3>
               <p className="text-gray-600">Easily share and organize study materials with your peers.</p>
             </div>
           </div>
