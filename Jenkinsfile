@@ -55,15 +55,21 @@ pipeline {
             }
         }
 
-        stage('Push to ECR') {
+       stage('Push to ECR') {
     steps {
-        withCredentials([aws(credentialsId: 'aws-credentials')]) {
+        withCredentials([
+            string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+            string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')
+        ]) {
             sh '''
+                # Configure AWS CLI
+                export AWS_DEFAULT_REGION=us-east-1
+                
                 # Login to ECR
                 aws ecr get-login-password --region us-east-1 | \
                 docker login --username AWS --password-stdin 196530534986.dkr.ecr.us-east-1.amazonaws.com
                 
-                # Tag images for ECR
+                # Tag images
                 docker tag ${BACKEND_IMAGE}:latest 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-backend:latest
                 docker tag ${FRONTEND_IMAGE}:latest 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest
                 
@@ -78,15 +84,23 @@ pipeline {
 stage('Deploy to EC2') {
     steps {
         withCredentials([
-            sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY'),
-            aws(credentialsId: 'aws-credentials')
+            sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'SSH_KEY', usernameVariable: 'SSH_USER'),
+            string(credentialsId: 'aws-access-key-id', variable: 'AWS_ACCESS_KEY_ID'),
+            string(credentialsId: 'aws-secret-access-key', variable: 'AWS_SECRET_ACCESS_KEY')
         ]) {
             sh '''
-                # SSH into EC2 and restart containers with new images
-                ssh -o StrictHostKeyChecking=no -i $SSH_KEY ubuntu@<your-ec2-public-ip> << 'ENDSSH'
+                # Get EC2 IP (replace with your IP or use variable)
+                EC2_IP="<your-ec2-public-ip>"
+                
+                # Deploy to EC2
+                ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ubuntu@${EC2_IP} << 'ENDSSH'
+                    export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+                    export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+                    export AWS_DEFAULT_REGION=us-east-1
+                    
                     cd ~/app
                     
-                    # Login to ECR on EC2
+                    # Login to ECR
                     aws ecr get-login-password --region us-east-1 | \
                     docker login --username AWS --password-stdin 196530534986.dkr.ecr.us-east-1.amazonaws.com
                     
