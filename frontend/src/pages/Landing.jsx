@@ -54,12 +54,34 @@ export default function Landing() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white relative overflow-hidden">
+        {/* Animated background elements */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full mix-blend-overlay filter blur-xl animate-blob"></div>
+          <div className="absolute top-40 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-overlay filter blur-xl animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-1/3 w-72 h-72 bg-pink-300 rounded-full mix-blend-overlay filter blur-xl animate-blob animation-delay-4000"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6">Study Together <br />Succeed Together</h1>
-              <p className="text-xl mb-8">Stay with Us<br/>Collaborate with peers, share resources, and boost your productivity in a supportive learning community.</p>
+              {/* New Badge */}
+              <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 animate-bounce-slow">
+                <span className="relative flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                <span className="text-sm font-semibold text-white">🎓 10,000+ Students Learning Together</span>
+              </div>
+              
+              <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+                Study Together <br />
+                <span className="bg-gradient-to-r from-yellow-300 to-pink-300 bg-clip-text text-transparent">Succeed Together</span>
+              </h1>
+              <p className="text-xl mb-8 text-white/90 leading-relaxed">
+                ✨ <span className="font-semibold">Stay with Us</span><br/>
+                Collaborate with peers, share resources, and boost your productivity in a supportive learning community.
+              </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/login" className="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-600 bg-white hover:bg-gray-50 transition-all duration-300 hover:scale-105">Get Started</Link>
                 <button 
