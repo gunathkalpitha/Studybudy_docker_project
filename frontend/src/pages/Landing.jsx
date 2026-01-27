@@ -39,6 +39,35 @@ function ShareIcon({ className }) {
 
 export default function Landing() {
   const [showLearnMore, setShowLearnMore] = useState(false)
+  const [currentSlide, setCurrentSlide] = useState(0)
+
+  // Hero section images
+  const heroImages = [
+    {
+      url: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1171&q=80",
+      alt: "Students collaborating"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1170&q=80",
+      alt: "Student studying with laptop"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1170&q=80",
+      alt: "Group study session"
+    },
+    {
+      url: "https://images.unsplash.com/photo-1513258496099-48168024aec0?auto=format&fit=crop&w=1170&q=80",
+      alt: "Students in library"
+    }
+  ]
+
+  // Auto-slide every 3 seconds
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroImages.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
 
   const scrollToLearnMore = () => {
     setShowLearnMore(true)
@@ -54,34 +83,12 @@ export default function Landing() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       {/* Hero Section */}
-      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white relative overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 left-10 w-72 h-72 bg-white rounded-full mix-blend-overlay filter blur-xl animate-blob"></div>
-          <div className="absolute top-40 right-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-overlay filter blur-xl animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-1/3 w-72 h-72 bg-pink-300 rounded-full mix-blend-overlay filter blur-xl animate-blob animation-delay-4000"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 relative z-10">
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              {/* New Badge */}
-              <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 animate-bounce-slow">
-                <span className="relative flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
-                </span>
-                <span className="text-sm font-semibold text-white">🎓 10,000+ Students Learning Together</span>
-              </div>
-              
-              <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-                Study Together <br />
-                <span className="bg-gradient-to-r from-yellow-300 to-pink-300 bg-clip-text text-transparent">Succeed Together</span>
-              </h1>
-              <p className="text-xl mb-8 text-white/90 leading-relaxed">
-                ✨ <span className="font-semibold">Stay with Us</span><br/>
-                Collaborate with peers, share resources, and boost your productivity in a supportive learning community.
-              </p>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">Study Together <br />Succeed Together</h1>
+              <p className="text-xl mb-8">Stay with Us<br/>Collaborate with peers, share resources, and boost your productivity in a supportive learning community.</p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/login" className="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-600 bg-white hover:bg-gray-50 transition-all duration-300 hover:scale-105">Get Started</Link>
                 <button 
@@ -92,8 +99,60 @@ export default function Landing() {
                 </button>
               </div>
             </div>
-            <div className="hidden md:block">
-              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1171&q=80" alt="Students collaborating" className="rounded-lg shadow-xl" />
+            <div className="hidden md:block relative">
+              {/* Image Slider Container */}
+              <div className="relative h-96 rounded-lg shadow-2xl overflow-hidden">
+                {heroImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-1000 ${
+                      index === currentSlide ? 'opacity-100' : 'opacity-0'
+                    }`}
+                  >
+                    <img 
+                      src={image.url} 
+                      alt={image.alt} 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ))}
+                
+                {/* Slide Indicators */}
+                <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+                  {heroImages.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setCurrentSlide(index)}
+                      className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        index === currentSlide 
+                          ? 'bg-white w-8' 
+                          : 'bg-white/50 hover:bg-white/75'
+                      }`}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+
+                {/* Navigation Arrows */}
+                <button
+                  onClick={() => setCurrentSlide((prev) => (prev - 1 + heroImages.length) % heroImages.length)}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-300 z-10 group"
+                  aria-label="Previous slide"
+                >
+                  <svg className="w-6 h-6 text-indigo-600 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                <button
+                  onClick={() => setCurrentSlide((prev) => (prev + 1) % heroImages.length)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg transition-all duration-300 z-10 group"
+                  aria-label="Next slide"
+                >
+                  <svg className="w-6 h-6 text-indigo-600 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
