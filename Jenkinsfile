@@ -4,6 +4,7 @@ pipeline {
     environment {
         BACKEND_IMAGE = 'gbgk/studybudy-backend'
         FRONTEND_IMAGE = 'gbgk/studybudy-frontend'
+        IMAGE_TAG = "${BUILD_NUMBER}-${GIT_COMMIT.take(7)}"
     }
 
     stages {
@@ -16,7 +17,10 @@ pipeline {
         stage('Build Backend Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${BACKEND_IMAGE}:latest -f backend/Dockerfile backend/"
+                    sh """
+                        docker build -t ${BACKEND_IMAGE}:${IMAGE_TAG} -f backend/Dockerfile backend/
+                        docker tag ${BACKEND_IMAGE}:${IMAGE_TAG} ${BACKEND_IMAGE}:latest
+                    """
                 }
             }
         }
@@ -24,7 +28,10 @@ pipeline {
         stage('Build Frontend Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${FRONTEND_IMAGE}:latest -f frontend/Dockerfile frontend/"
+                    sh """
+                        docker build -t ${FRONTEND_IMAGE}:${IMAGE_TAG} -f frontend/Dockerfile frontend/
+                        docker tag ${FRONTEND_IMAGE}:${IMAGE_TAG} ${FRONTEND_IMAGE}:latest
+                    """
                 }
             }
         }
@@ -42,9 +49,15 @@ pipeline {
         stage('Push to DockerHub') {
             steps {
                 script {
-                    sh "docker push ${BACKEND_IMAGE}:latest"
-                    sh "docker push ${FRONTEND_IMAGE}:latest"
-                    echo "✅ Images pushed to DockerHub successfully"
+                    sh """
+                        docker push ${BACKEND_IMAGE}:${IMAGE_TAG}
+                        docker push ${BACKEND_IMAGE}:latest
+                        docker push ${FRONTEND_IMAGE}:${IMAGE_TAG}
+                        docker push ${FRONTEND_IMAGE}:latest
+                        echo "✅ Images pushed to DockerHub successfully"
+                        echo "📦 Backend: ${BACKEND_IMAGE}:${IMAGE_TAG}"
+                        echo "📦 Frontend: ${FRONTEND_IMAGE}:${IMAGE_TAG}"
+                    """
                 }
             }
         }
@@ -60,15 +73,23 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ubuntu@${EC2_IP} << 'ENDSSH'
                             cd ~/app
                             
+                            # Remove old containers and images
+                            docker compose down
+                            docker rmi -f gbgk/studybudy-backend:latest gbgk/studybudy-frontend:latest || true
+                            
                             # Pull latest images from DockerHub
                             docker compose pull
                             
-                            # Restart containers with new images
-                            docker compose up -d --force-recreate
+                            # Start containers with new images
+                            docker compose up -d
+                            
+                            # Clean up unused images
+                            docker image prune -f
                             
                             # Show status
                             echo "✅ Deployment complete!"
                             docker compose ps
+                            docker images | grep studybudy
 ENDSSH
                     '''
                 }

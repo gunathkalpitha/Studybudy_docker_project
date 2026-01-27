@@ -26,35 +26,54 @@ fi
 cd "$(dirname "$0")/.."
 PROJECT_ROOT=$(pwd)
 
+# Generate unique tag
+TIMESTAMP=$(date +%s)
+GIT_HASH=$(git rev-parse --short HEAD 2>/dev/null || echo "manual")
+IMAGE_TAG="${TIMESTAMP}-${GIT_HASH}"
+
 # Build images locally
 echo -e "${YELLOW}Building backend image...${NC}"
 cd ${PROJECT_ROOT}/backend
-docker build -t gbgk/studybudy-backend:latest .
+docker build -t gbgk/studybudy-backend:${IMAGE_TAG} .
+docker tag gbgk/studybudy-backend:${IMAGE_TAG} gbgk/studybudy-backend:latest
 
 echo -e "${YELLOW}Building frontend image...${NC}"
 cd ${PROJECT_ROOT}/frontend
-docker build -t gbgk/studybudy-frontend:latest .
+docker build -t gbgk/studybudy-frontend:${IMAGE_TAG} .
+docker tag gbgk/studybudy-frontend:${IMAGE_TAG} gbgk/studybudy-frontend:latest
 
 # Push to DockerHub
 echo -e "${YELLOW}Pushing images to DockerHub...${NC}"
+docker push gbgk/studybudy-backend:${IMAGE_TAG}
 docker push gbgk/studybudy-backend:latest
+docker push gbgk/studybudy-frontend:${IMAGE_TAG}
 docker push gbgk/studybudy-frontend:latest
 
 echo -e "${GREEN}✓ Images pushed to DockerHub${NC}"
+echo -e "${YELLOW}📦 Backend: gbgk/studybudy-backend:${IMAGE_TAG}${NC}"
+echo -e "${YELLOW}📦 Frontend: gbgk/studybudy-frontend:${IMAGE_TAG}${NC}"
 
 # Deploy to EC2
 echo -e "${YELLOW}Deploying to EC2...${NC}"
 ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ubuntu@${EC2_IP} << 'ENDSSH'
     cd ~/app
     
+    # Stop containers and remove old images
+    docker compose down
+    docker rmi -f gbgk/studybudy-backend:latest gbgk/studybudy-frontend:latest || true
+    
     # Pull latest images
     docker compose pull
     
-    # Restart containers
-    docker compose up -d --force-recreate
+    # Start containers
+    docker compose up -d
+    
+    # Clean up
+    docker image prune -f
     
     # Show status
     docker compose ps
+    docker images | grep studybudy
 ENDSSH
 
 echo -e "${GREEN}✓ Deployment complete!${NC}"
