@@ -73,9 +73,65 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no -i ${SSH_KEY} ubuntu@${EC2_IP} << 'ENDSSH'
                             cd ~/app
                             
+                            # Get public IP
+                            PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+                            
                             # Remove old containers and images
-                            docker compose down
+                            docker compose down || true
                             docker rmi -f gbgk/studybudy-backend:latest gbgk/studybudy-frontend:latest || true
+                            
+                            # Create/Update docker-compose.yml with DockerHub images
+                            cat > docker-compose.yml << 'EOF'
+services:
+  mongo:
+    image: mongo:6
+    container_name: mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - app-network
+
+  backend:
+    image: gbgk/studybudy-backend:latest
+    container_name: react_docker_backend
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongo:27017/study-app
+      - JWT_SECRET=your-super-secret-jwt-key-change-this-in-production
+      - PORT=5000
+    depends_on:
+      - mongo
+    networks:
+      - app-network
+
+  frontend:
+    image: gbgk/studybudy-frontend:latest
+    container_name: react_docker_frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://${PUBLIC_IP}:5000
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo_data:
+EOF
+                            
+                            echo "✅ docker-compose.yml updated with DockerHub images"
                             
                             # Pull latest images from DockerHub
                             docker compose pull
