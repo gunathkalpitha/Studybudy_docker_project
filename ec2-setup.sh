@@ -13,9 +13,6 @@ sudo ./aws/install
 echo "=== Verifying AWS CLI ==="
 aws --version
 
-echo "=== Logging into ECR ==="
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 196530534986.dkr.ecr.us-east-1.amazonaws.com
-
 echo "=== Getting public IP ==="
 PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
 echo "Public IP: $PUBLIC_IP"
@@ -39,7 +36,7 @@ services:
       - app-network
 
   backend:
-    image: 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-backend:latest
+    image: gbgk/studybudy-backend:latest
     container_name: react_docker_backend
     restart: unless-stopped
     ports:
@@ -55,7 +52,7 @@ services:
       - app-network
 
   frontend:
-    image: 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest
+    image: gbgk/studybudy-frontend:latest
     container_name: react_docker_frontend
     restart: unless-stopped
     ports:

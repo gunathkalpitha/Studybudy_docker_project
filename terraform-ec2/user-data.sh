@@ -55,7 +55,7 @@ services:
       - app-network
 
   backend:
-    image: 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-backend:latest
+    image: gbgk/studybudy-backend:latest
     container_name: backend
     ports:
       - "5000:5000"
@@ -71,7 +71,7 @@ services:
       - app-network
 
   frontend:
-    image: 196530534986.dkr.ecr.us-east-1.amazonaws.com/react-doker-frontend:latest
+    image: gbgk/studybudy-frontend:latest
     container_name: frontend
     ports:
       - "5173:5173"
@@ -89,10 +89,7 @@ volumes:
   mongo_data:
 EOF
 
-# Login to ECR and pull images
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 196530534986.dkr.ecr.us-east-1.amazonaws.com
-
-# Start services
+# Pull images from DockerHub and start services
 docker compose up -d
 
 # Set ownership
