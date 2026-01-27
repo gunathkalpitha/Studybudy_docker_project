@@ -75,13 +75,14 @@ pipeline {
                             
                             # Get public IP
                             PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+                            echo "Public IP: $PUBLIC_IP"
                             
                             # Remove old containers and images
                             docker compose down || true
                             docker rmi -f gbgk/studybudy-backend:latest gbgk/studybudy-frontend:latest || true
                             
-                            # Create/Update docker-compose.yml with DockerHub images
-                            cat > docker-compose.yml << 'EOF'
+                            # Create/Update docker-compose.yml with DockerHub images and substitute PUBLIC_IP
+                            cat > docker-compose.yml << EOF
 services:
   mongo:
     image: mongo:6
@@ -117,7 +118,7 @@ services:
     ports:
       - "5173:5173"
     environment:
-      - VITE_API_URL=http://${PUBLIC_IP}:5000
+      - VITE_API_URL=http://$PUBLIC_IP:5000
     depends_on:
       - backend
     networks:
