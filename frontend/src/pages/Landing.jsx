@@ -87,7 +87,7 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold mb-6"> <br />Succeed Together</h1>
+              <h1 className="text-4xl md:text-5xl font-bold mb-6">Study Together <br />Succeed Together</h1>
               <p className="text-xl mb-8">Stay with Us<br/>Collaborate with peers, share resources, and boost your productivity in a supportive learning community</p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="/login" className="inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-indigo-600 bg-white hover:bg-gray-50 transition-all duration-300 hover:scale-105">Get Started</Link>
@@ -101,7 +101,7 @@ export default function Landing() {
             </div>
             <div className="hidden md:block relative">
               {/* Image Slider Container - Enlarged */}
-              <div className="relative h-[34rem] w-[38rem] rounded-2xl shadow-2xl overflow-hidden mx-auto">
+              <div className="relative h-96 rounded-lg shadow-2xl overflow-hidden">
                 {heroImages.map((image, index) => (
                   <div
                     key={index}
