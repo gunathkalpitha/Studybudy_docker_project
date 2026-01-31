@@ -100,8 +100,8 @@ export default function Landing() {
               </div>
             </div>
             <div className="hidden md:block relative">
-              {/* Image Slider Container */}
-              <div className="relative h-96 rounded-lg shadow-2xl overflow-hidden">
+              {/* Image Slider Container - Enlarged */}
+              <div className="relative h-[34rem] w-[38rem] rounded-2xl shadow-2xl overflow-hidden mx-auto">
                 {heroImages.map((image, index) => (
                   <div
                     key={index}
