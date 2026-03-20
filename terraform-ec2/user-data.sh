@@ -38,7 +38,7 @@ mkdir -p /home/ubuntu/app
 cd /home/ubuntu/app
 
 # Get public IP dynamically
-PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+PUBLIC_IP=$(curl -s http://16.16.212.61/latest/meta-data/public-ipv4)
 
 # Create docker-compose.yml
 cat > docker-compose.yml <<EOF

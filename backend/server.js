@@ -23,7 +23,7 @@ try { fs.mkdirSync(uploadsPath, { recursive: true }); } catch (e) { /* ignore */
 
 // Enable CORS
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://13.220.26.51:5173'],
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://16.16.212.61:5173'],
   credentials: true,
 }));
 
