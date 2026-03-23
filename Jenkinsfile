@@ -117,8 +117,7 @@ services:
     restart: unless-stopped
     ports:
       - "5173:5173"
-    environment:
-      - VITE_API_URL=http://$PUBLIC_IP:5000
+   
     depends_on:
       - backend
     networks:
