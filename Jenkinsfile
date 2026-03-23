@@ -74,7 +74,7 @@ pipeline {
                             cd ~/app
                             
                             # Get public IP
-                            PUBLIC_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+                            PUBLIC_IP=$(curl -s http://16.16.212.61/latest/meta-data/public-ipv4)
                             echo "Public IP: $PUBLIC_IP"
                             
                             # Remove old containers and images
